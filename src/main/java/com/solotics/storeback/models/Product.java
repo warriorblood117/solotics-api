@@ -32,5 +32,7 @@ public class Product {
 
     private boolean disponible;
 
+    private String imagen;
+
 
 }
