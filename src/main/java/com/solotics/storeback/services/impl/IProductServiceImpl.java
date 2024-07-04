@@ -39,4 +39,19 @@ public class IProductServiceImpl implements IProductsService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> save(Product product) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            productsRepository.save(product);
+            response.put("message", "Producto creado exitosamente.");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            response.put("message", "Fallo al crear el producto.");
+            response.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 }
