@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class IProductServiceImpl implements IProductsService {
@@ -52,6 +53,18 @@ public class IProductServiceImpl implements IProductsService {
             response.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> findById(Long id) {
+        Optional<Product> product = this.productsRepository.findById(id);
+        Map<String, Object> message = new HashMap<>();
+        if (product.isPresent()) {
+            message.put("message", product.get());
+            return ResponseEntity.status(HttpStatus.FOUND).body(message);
+        }
+        message.put("message", "Producto no encontrado");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
 }
