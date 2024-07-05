@@ -9,4 +9,6 @@ public interface IProductsService {
     ResponseEntity findAll();
     
     ResponseEntity save(Product product);
+
+    ResponseEntity findById(Long id);
 }
